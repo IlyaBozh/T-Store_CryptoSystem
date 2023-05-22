@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IncredibleBackendContracts.Requests;
+using IncredibleBackendContracts.Responses;
 using Microsoft.AspNetCore.Mvc;
 using T_Store_CryptoSystem.API.Extensions;
 using T_Store_CryptoSystem.BusinessLayer.Models;
@@ -46,5 +47,16 @@ public class TransactionsController : Controller
 
         _logger.LogInformation($"Controller: Withdraw id {id} returned");
         return Created($"{this.GetRequestPath()}/{id}", id);
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(long), StatusCodes.Status200OK)]
+    public async Task<ActionResult<TransactionResponse>> GetTransactionById([FromRoute] long id)
+    {
+        _logger.LogInformation($"Controller: Call method GetTransactionById, transaction id {id} ");
+        var transaction = await _transactionServices.GetTransactionById(id);
+
+        _logger.LogInformation($"Transaction id {transaction.Id}, account id {transaction.AccountId} returned");
+        return Ok(_mapper.Map<TransactionResponse>(transaction));
     }
 }
