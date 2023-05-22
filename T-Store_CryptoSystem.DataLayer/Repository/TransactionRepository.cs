@@ -62,8 +62,15 @@ public class TransactionRepository : BaseRepository, ITransactionRepository
         return balance;
     }
 
-    public Task<TransactionDto?> GetTransactionById(long id)
+    public async Task<TransactionDto?> GetTransactionById(long id)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("Data layer: Connection to data base");
+        var transaction = await _dbConnection.QueryFirstOrDefaultAsync<TransactionDto>(
+                 TransactionStoredProcedure.Transaction_GetById,
+                 param: new { id },
+                 commandType: CommandType.StoredProcedure);
+
+        _logger.LogInformation($"Data layer: Transaction id {id} returned to business");
+        return transaction;
     }
 }
