@@ -42,7 +42,13 @@ public class RateService : IRateService
 
     public Dictionary<string, decimal> GetRate()
     {
-        throw new NotImplementedException();
+        if (RateModel.CurrencyRates is null || RateModel.CurrencyRates.Count == 0)
+        {
+            throw new ServiceUnavailableException("Rates is epmty");
+        }
+        _logger.LogInformation("Business layer: Currency rates returned");
+
+        return RateModel.CurrencyRates;
     }
 
     public void SaveCurrencyRate(Dictionary<string, decimal> rates)
