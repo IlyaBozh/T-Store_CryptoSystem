@@ -38,9 +38,16 @@ public class TransactionRepository : BaseRepository, ITransactionRepository
         return id;
     }
 
-    public Task<List<TransactionDto>> GetAllTransactionsByAccountId(long accountId)
+    public async Task<List<TransactionDto>> GetAllTransactionsByAccountId(long accountId)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("Data layer: Connection to data base");
+        var transactions = (await _dbConnection.QueryAsync<TransactionDto>(
+                  TransactionStoredProcedure.Transaction_GetAllTransactionsByAccountId,
+                  param: new { accountId },
+                  commandType: CommandType.StoredProcedure)).ToList();
+
+        _logger.LogInformation($"Data layer: Transactions by account id {accountId} returned to business");
+        return transactions;
     }
 
     public Task<decimal> GetBalanceByAccountId(long accountId)
