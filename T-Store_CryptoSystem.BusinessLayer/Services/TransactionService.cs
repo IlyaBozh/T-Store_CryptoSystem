@@ -59,9 +59,18 @@ public class TransactionService : ITransactionService
         return balance;
     }
 
-    public Task<TransactionModel?> GetTransactionById(long id)
+    public async Task<TransactionModel?> GetTransactionById(long id)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("Business layer: Query in data base for transaction receiving");
+        var transaction = await _transactionRepository.GetTransactionById(id);
+
+        if (transaction is null)
+        {
+            throw new EntityNotFoundException($"Transaction {id} not found");
+        }
+
+        _logger.LogInformation("Business layer: Transaction returned to controller");
+        return _mapper.Map<TransactionModel>(transaction);
     }
 
     public Task<Dictionary<DateTime, List<TransactionModel>>> GetTransactionsByAccountId(long accountId)
