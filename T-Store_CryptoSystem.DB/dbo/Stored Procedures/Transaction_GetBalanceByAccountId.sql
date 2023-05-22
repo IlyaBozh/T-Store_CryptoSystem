@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Transaction_SelectBalanceByAccountId]
+﻿CREATE PROCEDURE [dbo].[Transaction_GetBalanceByAccountId]
 	@AccountId bigint
 
 AS
