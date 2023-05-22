@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using T_Store_CryptoSystem.BusinessLayer.Exceptions;
 using T_Store_CryptoSystem.BusinessLayer.Models;
 using T_Store_CryptoSystem.BusinessLayer.Services.Interfaces;
 using T_Store_CryptoSystem.DataLayer.Enums;
@@ -34,6 +35,20 @@ public class TransactionService : ITransactionService
 
         return transactionIdResult;
     }
+    
+    public async Task<long> Withdraw(TransactionModel transaction)
+    {
+        _logger.LogInformation($"Business layer: Check balance for account id {transaction.AccountId}");
+        await CheckBalance(transaction);
+
+        transaction.TransactionType = TransactionType.Withdraw;
+        transaction.Amount *= -1;
+
+        _logger.LogInformation("Business layer: Query to data base for add withdraw");
+        var transactionIdResult = await _transactionRepository.AddTransaction(_mapper.Map<TransactionDto>(transaction));
+
+        return transactionIdResult;
+    }
 
     public Task<decimal?> GetBalanceByAccountId(long accountId)
     {
@@ -50,8 +65,13 @@ public class TransactionService : ITransactionService
         throw new NotImplementedException();
     }
 
-    public Task<long> Withdraw(TransactionModel transaction)
+    private async Task CheckBalance(TransactionModel transaction)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("Business layer: Query in data base for received balance");
+        var balance = await _transactionRepository.GetBalanceByAccountId(transaction.AccountId);
+        if (transaction.Amount > balance)
+        {
+            throw new BalanceExceedException($"You have not a enough money on balance");
+        }
     }
 }
