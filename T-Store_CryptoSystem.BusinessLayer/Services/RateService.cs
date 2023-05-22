@@ -15,7 +15,29 @@ public class RateService : IRateService
 
     public decimal GetCurrencyRate(string currencyFirst, string currencySecond)
     {
-        throw new NotImplementedException();
+        var result = 1m;
+
+        lock (_locker)
+        {
+            _logger.LogInformation("Business layer: Call method GetRate");
+
+            var rates = GetRate();
+
+            if (currencyFirst != currencySecond)
+            {
+                if (RateModel.BaseCurrency == currencyFirst || RateModel.BaseCurrency == currencySecond)
+                {
+                    _logger.LogInformation("Business layer: Calculate currency rate");
+                    result = rates.ContainsKey(currencyFirst) is true ? rates[currencyFirst] : rates[currencySecond];
+                }
+                else
+                {
+                    _logger.LogInformation("Business layer: Calculate currency rate");
+                    result = rates[currencySecond] / rates[currencyFirst];
+                }
+            }
+            return result;
+        }
     }
 
     public Dictionary<string, decimal> GetRate()
