@@ -1,7 +1,10 @@
 ﻿
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using T_Store_CryptoSystem.BusinessLayer.Models;
 using T_Store_CryptoSystem.BusinessLayer.Services.Interfaces;
+using T_Store_CryptoSystem.DataLayer.Enums;
+using T_Store_CryptoSystem.DataLayer.Models;
 using T_Store_CryptoSystem.DataLayer.Repository.interfaces;
 
 namespace T_Store_CryptoSystem.BusinessLayer.Services;
@@ -22,9 +25,14 @@ public class TransactionService : ITransactionService
         _logger = logger;
     }
 
-    public Task<long> AddDeposit(TransactionModel transaction)
+    public async Task<long> AddDeposit(TransactionModel transaction)
     {
-        throw new NotImplementedException();
+        transaction.TransactionType = TransactionType.Deposit;
+
+        _logger.LogInformation("Business layer: Query to data base for add transaction");
+        var transactionIdResult = await _transactionRepository.AddTransaction(_mapper.Map<TransactionDto>(transaction));
+
+        return transactionIdResult;
     }
 
     public Task<decimal?> GetBalanceByAccountId(long accountId)
