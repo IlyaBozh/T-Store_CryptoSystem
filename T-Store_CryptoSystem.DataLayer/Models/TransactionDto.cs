@@ -1,4 +1,6 @@
 ﻿
+using T_Store_CryptoSystem.DataLayer.Enums;
+
 namespace T_Store_CryptoSystem.DataLayer.Models;
 
 public class TransactionDto
