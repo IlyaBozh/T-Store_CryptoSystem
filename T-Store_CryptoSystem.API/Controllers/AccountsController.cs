@@ -19,4 +19,13 @@ public class AccountsController : Controller
         _mapper = mapper;
         _logger = logger;
     }
+
+    [HttpGet("{id}/balance")]
+    [ProducesResponseType(typeof(decimal), StatusCodes.Status200OK)]
+    public async Task<ActionResult<decimal>> GetBalanceByAccountId([FromRoute] long id)
+    {
+        _logger.LogInformation($"Controller: Call method GetBalanceByAccountId {id}");
+
+        return Ok(await _transactionServices.GetBalanceByAccountId(id));
+    }
 }
