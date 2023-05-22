@@ -50,9 +50,13 @@ public class TransactionService : ITransactionService
         return transactionIdResult;
     }
 
-    public Task<decimal?> GetBalanceByAccountId(long accountId)
+    public async Task<decimal?> GetBalanceByAccountId(long accountId)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("Business layer: Query in data base for received balance");
+        var balance = await _transactionRepository.GetBalanceByAccountId(accountId);
+
+        _logger.LogInformation($"Business layer: Balance by account id {accountId} returned to controller");
+        return balance;
     }
 
     public Task<TransactionModel?> GetTransactionById(long id)
