@@ -73,9 +73,19 @@ public class TransactionService : ITransactionService
         return _mapper.Map<TransactionModel>(transaction);
     }
 
-    public Task<Dictionary<DateTime, List<TransactionModel>>> GetTransactionsByAccountId(long accountId)
+    public async Task<Dictionary<DateTime, List<TransactionModel>>> GetTransactionsByAccountId(long accountId)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation($"Business layer: Query in database for transaction by accountId {accountId}");
+        var transactions = await _transactionRepository.GetAllTransactionsByAccountId(accountId);
+
+        _logger.LogInformation($"Business layer: Add transactions in dictionary");
+        var transactionsDictionary = _mapper.Map<List<TransactionDto>, List<TransactionModel>>(transactions)
+            .GroupBy(t => t.Date)
+            .ToDictionary(date => date.Key, transactions => transactions
+            .ToList());
+
+        _logger.LogInformation("Business layer: Transactions returned to controller");
+        return transactionsDictionary;
     }
 
     private async Task CheckBalance(TransactionModel transaction)
