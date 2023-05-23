@@ -64,7 +64,7 @@
     <Build Include="dbo\Tables\Transaction.sql" />
     <Build Include="dbo\Stored Procedures\Transaction_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Transaction_GetBalanceByAccountId.sql" />
-    <Build Include="dbo\Stored Procedures\Tramsaction_Add.sql" />
+    <Build Include="dbo\Stored Procedures\Transaction_Add.sql" />
     <Build Include="dbo\Stored Procedures\Transaction_GetLastTransactionByAccountId.sql" />
     <Build Include="dbo\Stored Procedures\Transaction_GetAllTransactionsByAccountId.sql" />
   </ItemGroup>

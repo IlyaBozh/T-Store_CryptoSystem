@@ -10,7 +10,7 @@ using Microsoft.OpenApi.Models;
 
 namespace T_Store_CryptoSystem.API.Extensions;
 
-public static class ProgrammExtension
+public static class ProgrammExtensions
 {
     public static void AddServices(this IServiceCollection services)
     {

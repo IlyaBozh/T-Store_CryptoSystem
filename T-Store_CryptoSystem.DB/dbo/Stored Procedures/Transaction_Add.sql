@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Tramsaction_Add]
+﻿CREATE PROCEDURE [dbo].[Transaction_Add]
 	@AccountId bigint,
 	@Date datetime2(7),
 	@TransactionType tinyint,
