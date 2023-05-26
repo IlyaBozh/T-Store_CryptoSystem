@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
-using IncredibleBackendContracts.Requests;
 using T_Store_CryptoSystem.API.Infrastructure;
+using T_Store_CryptoSystem.API.Models.Request;
 
 namespace T_Store_CryptoSystem.API.Validations;
 

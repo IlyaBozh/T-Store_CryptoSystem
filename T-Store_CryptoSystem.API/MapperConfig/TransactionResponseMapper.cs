@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IncredibleBackendContracts.Responses;
+using T_Store_CryptoSystem.API.Models.Response;
 using T_Store_CryptoSystem.BusinessLayer.Models;
 
 namespace T_Store_CryptoSystem.API.MapperConfig;
@@ -34,13 +34,13 @@ public class TransactionResponseMapper : ITypeConverter<Dictionary<DateTime, Lis
                                 Id = transfers[0].Id,
                                 AccountId = transfers[0].AccountId,
                                 Date = transfers[0].Date,
-                                TransactionType = (IncredibleBackendContracts.Enums.TransactionType)transfers[0].TransactionType,
+                                TransactionType = transfers[0].TransactionType,
                                 Amount = transfers[0].Amount,
-                                Currency = (IncredibleBackendContracts.Enums.Currency)transfers[0].Currency,
+                                Currency = transfers[0].Currency,
                                 RecipientId = transfers[1].Id,
                                 RecipientAccountId = transfers[1].AccountId,
                                 RecipientAmount = transfers[1].Amount,
-                                RecipientCurrency = (IncredibleBackendContracts.Enums.Currency)transfers[1].Currency
+                                RecipientCurrency = transfers[1].Currency
                             };
                             destination.Add(transferModel);
                         }
