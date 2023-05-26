@@ -4,9 +4,9 @@ using T_Store_CryptoSystem.DataLayer.Repository.interfaces;
 using T_Store_CryptoSystem.DataLayer.Repository;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using IncredibleBackendContracts.Requests;
 using T_Store_CryptoSystem.API.Validations;
 using Microsoft.OpenApi.Models;
+using T_Store_CryptoSystem.API.Models.Request;
 
 namespace T_Store_CryptoSystem.API.Extensions;
 

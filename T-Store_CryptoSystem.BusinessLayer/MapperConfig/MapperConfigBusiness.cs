@@ -1,6 +1,5 @@
 ﻿
 using AutoMapper;
-using IncredibleBackendContracts.Events;
 using T_Store_CryptoSystem.BusinessLayer.Models;
 using T_Store_CryptoSystem.DataLayer.Models;
 
@@ -11,6 +10,5 @@ public class MapperConfigBusiness : Profile
     public MapperConfigBusiness()
     {
         CreateMap<TransactionModel, TransactionDto>().ReverseMap();
-        CreateMap<TransactionModel, TransactionCreatedEvent>();
     }
 }

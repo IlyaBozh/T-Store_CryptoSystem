@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using IncredibleBackendContracts.Requests;
-using IncredibleBackendContracts.Responses;
+using T_Store_CryptoSystem.API.Models.Request;
+using T_Store_CryptoSystem.API.Models.Response;
 using T_Store_CryptoSystem.BusinessLayer.Models;
 
 namespace T_Store_CryptoSystem.API.MapperConfig;

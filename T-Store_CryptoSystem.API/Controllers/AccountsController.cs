@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using IncredibleBackendContracts.Responses;
 using Microsoft.AspNetCore.Mvc;
+using T_Store_CryptoSystem.API.Models.Response;
 using T_Store_CryptoSystem.BusinessLayer.Services.Interfaces;
 
 namespace T_Store_CryptoSystem.API.Controllers;
