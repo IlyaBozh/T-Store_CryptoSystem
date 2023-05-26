@@ -40,7 +40,7 @@ public class TransactionsController : Controller
     [HttpPost("withdraw")]
     [ProducesResponseType(typeof(long), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<ActionResult<long>> Withdraw([FromBody] TransactionRequest transaction)
+    public async Task<ActionResult<long>> Withdraw([FromBody] TransactionTransferRequest transaction)
     {
         _logger.LogInformation($"Controller: Call method Withdraw, accountId {transaction.AccountId}, amount {transaction.Amount}, {transaction.Currency}");
         var id = await _transactionServices.Withdraw(_mapper.Map<TransactionModel>(transaction));

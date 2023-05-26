@@ -26,14 +26,15 @@ public class TransactionService : ITransactionService
         _logger = logger;
     }
 
-    public async Task<long> AddDeposit(TransactionModel transaction)
+    public async Task<long> AddDeposit(List<TransactionModel> transactions)
     {
-        transaction.TransactionType = TransactionType.Deposit;
+        int senderIndex = 0;
+        int recipientIndex = 1;
 
-        _logger.LogInformation("Business layer: Query to data base for add transaction");
-        var transactionIdResult = await _transactionRepository.AddTransaction(_mapper.Map<TransactionDto>(transaction));
+        _logger.LogInformation($"Business layer: Check balance by account id {transactions[senderIndex].AccountId}");
+        await CheckBalance(transactions[senderIndex]);
 
-        return transactionIdResult;
+        var transfersConvert = await _calculationService.ConvertCurrency(transactions);
     }
     
     public async Task<long> Withdraw(TransactionModel transaction)
