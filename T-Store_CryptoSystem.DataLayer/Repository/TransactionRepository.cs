@@ -38,6 +38,26 @@ public class TransactionRepository : BaseRepository, ITransactionRepository
         return id;
     }
 
+    public async Task<List<long>> AddTransferTransactions(List<TransactionDto> transfer)
+    {
+        _logger.LogInformation("Data layer: Connection to data base");
+        var transferIds = (await _dbConnection.QueryAsync<long>(
+                  TransactionStoredProcedure.Transaction_AddTransfer,
+                  param: new
+                  {
+                      AccountIdSender = transfer[0].AccountId,
+                      AccountIdRecipient = transfer[1].AccountId,
+                      Amount = (decimal)transfer[0].Amount,
+                      AmountConverted = transfer[1].Amount,
+                      CurrencySender = transfer[0].Currency,
+                      CurrencyRecipient = transfer[1].Currency,
+                  },
+                  commandType: CommandType.StoredProcedure)).ToList();
+
+        _logger.LogInformation($"Data layer:Transaction-{transfer[0].TransactionType}, ids {transferIds[0]}, {transferIds[1]} created");
+        return transferIds;
+    }
+
     public async Task<List<TransactionDto>> GetAllTransactionsByAccountId(long accountId)
     {
         _logger.LogInformation("Data layer: Connection to data base");

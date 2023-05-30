@@ -9,4 +9,5 @@ public interface ITransactionRepository
     public Task<decimal> GetBalanceByAccountId(long accountId);
     public Task<TransactionDto?> GetTransactionById(long id);
     public Task<List<TransactionDto>> GetAllTransactionsByAccountId(long accountId);
+    public Task<List<long>> AddTransferTransactions(List<TransactionDto> transfer);
 }

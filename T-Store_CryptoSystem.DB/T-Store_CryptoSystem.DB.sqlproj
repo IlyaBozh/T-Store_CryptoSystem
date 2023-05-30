@@ -67,5 +67,6 @@
     <Build Include="dbo\Stored Procedures\Transaction_Add.sql" />
     <Build Include="dbo\Stored Procedures\Transaction_GetLastTransactionByAccountId.sql" />
     <Build Include="dbo\Stored Procedures\Transaction_GetAllTransactionsByAccountId.sql" />
+    <Build Include="dbo\Stored Procedures\Transaction_AddTransfer.sql" />
   </ItemGroup>
 </Project>

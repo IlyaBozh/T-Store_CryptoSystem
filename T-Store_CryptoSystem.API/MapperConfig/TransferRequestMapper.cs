@@ -5,7 +5,7 @@ using T_Store_CryptoSystem.DataLayer.Enums;
 
 namespace T_Store_CryptoSystem.API.MapperConfig;
 
-public class TransaferRequestMapper : ITypeConverter<TransactionTransferRequest, List<TransactionModel>>
+public class TransferRequestMapper : ITypeConverter<TransactionTransferRequest, List<TransactionModel>>
 {
     public List<TransactionModel> Convert(TransactionTransferRequest source, List<TransactionModel> destination, ResolutionContext context)
     {

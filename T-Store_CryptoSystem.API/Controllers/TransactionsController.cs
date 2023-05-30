@@ -43,7 +43,7 @@ public class TransactionsController : Controller
     public async Task<ActionResult<long>> Withdraw([FromBody] TransactionTransferRequest transaction)
     {
         _logger.LogInformation($"Controller: Call method Withdraw, accountId {transaction.AccountId}, amount {transaction.Amount}, {transaction.Currency}");
-        var id = await _transactionServices.Withdraw(_mapper.Map<TransactionModel>(transaction));
+        var id = await _transactionServices.Withdraw(_mapper.Map<List<TransactionModel>>(transaction));
 
         _logger.LogInformation($"Controller: Withdraw id {id} returned");
         return Created($"{this.GetRequestPath()}/{id}", id);
