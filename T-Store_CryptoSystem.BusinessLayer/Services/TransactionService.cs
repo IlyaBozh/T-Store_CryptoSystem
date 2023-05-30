@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using System.Transactions;
 using T_Store_CryptoSystem.BusinessLayer.Exceptions;
 using T_Store_CryptoSystem.BusinessLayer.Models;
 using T_Store_CryptoSystem.BusinessLayer.Services.Interfaces;
@@ -36,18 +37,20 @@ public class TransactionService : ITransactionService
         return transactionIdResult;
     }
     
-    public async Task<long> Withdraw(TransactionModel transaction)
+    public async Task<List<long>> Withdraw(List<TransactionModel> transactions)
     {
-        _logger.LogInformation($"Business layer: Check balance for account id {transaction.AccountId}");
-        await CheckBalance(transaction);
+        int senderIndex = 0;
+        int recipientIndex = 1;
 
-        transaction.TransactionType = TransactionType.Withdraw;
-        transaction.Amount *= -1;
+        _logger.LogInformation($"Business layer: Check balance by account id {transactions[senderIndex].AccountId}");
+        await CheckBalance(transactions[senderIndex]);
 
-        _logger.LogInformation("Business layer: Query to data base for add withdraw");
-        var transactionIdResult = await _transactionRepository.AddTransaction(_mapper.Map<TransactionDto>(transaction));
+        var transfersConvert = await _calculationService.ConvertCurrency(transactions);
 
-        return transactionIdResult;
+        _logger.LogInformation("Business layer: Query to data base for add transfers");
+        var transferResult = await _transactionRepository.AddTransferTransactions(_mapper.Map<List<TransactionDto>>(transfersConvert));
+
+        return transferResult;
     }
 
     public async Task<decimal?> GetBalanceByAccountId(long accountId)

@@ -14,6 +14,9 @@ public class MapperConfigAPI : Profile
 
         CreateMap<TransactionModel, TransactionResponse>();
 
+        CreateMap<TransactionTransferRequest, List<TransactionModel>>()
+            .ConvertUsing<TransferRequestMapper>();
+
         CreateMap<Dictionary<DateTime, List<TransactionModel>>, List<TransactionResponse>>()
            .ConvertUsing<TransactionResponseMapper>();
     }

@@ -9,5 +9,5 @@ public interface ITransactionService
     public Task<decimal?> GetBalanceByAccountId(long accountId);
     public Task<TransactionModel?> GetTransactionById(long id);
     public Task<Dictionary<DateTime, List<TransactionModel>>> GetTransactionsByAccountId(long accountId);
-    public Task<long> Withdraw(TransactionModel transaction);
+    public Task<List<long>> Withdraw(List<TransactionModel> transactions);
 }

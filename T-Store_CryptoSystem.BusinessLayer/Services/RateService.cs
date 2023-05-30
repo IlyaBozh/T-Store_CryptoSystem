@@ -21,14 +21,16 @@ public class RateService : IRateService
         {
             _logger.LogInformation("Business layer: Call method GetRate");
 
-            var rates = GetRate();
+            var rates = new Dictionary<string, decimal>();
+            rates.Add("USDBITCOIN", (decimal)0.000000012);
+            rates.Add("BITCOINUSD", (decimal)83333333.333);
 
             if (currencyFirst != currencySecond)
             {
-                if (RateModel.BaseCurrency == currencyFirst || RateModel.BaseCurrency == currencySecond)
+                if ("USD" == currencyFirst || "USD" == currencySecond)
                 {
                     _logger.LogInformation("Business layer: Calculate currency rate");
-                    result = rates.ContainsKey(currencyFirst) is true ? rates[currencyFirst] : rates[currencySecond];
+                    result = rates.ContainsKey(currencyFirst + currencySecond) is true ? rates[currencyFirst + currencySecond] : rates[currencySecond + currencyFirst];
                 }
                 else
                 {
