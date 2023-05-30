@@ -7,6 +7,8 @@ using FluentValidation.AspNetCore;
 using T_Store_CryptoSystem.API.Validations;
 using Microsoft.OpenApi.Models;
 using T_Store_CryptoSystem.API.Models.Request;
+using IncredibleBackend.Messaging.Extentions;
+using MassTransit;
 
 namespace T_Store_CryptoSystem.API.Extensions;
 
@@ -42,21 +44,12 @@ public static class ProgrammExtensions
         });
     }
 
-/*    public static void ConfigureMessaging(this IServiceCollection services)
+    public static void ConfigureMessaging(this IServiceCollection services)
     {
         services.RegisterConsumersAndProducers((config) =>
         {
             config.AddConsumer<RateConsumer>();
-        }, (cfg, ctx) =>
-        {
-            cfg.ReceiveEndpoint(RabbitEndpoint.CurrencyRates, c =>
-            {
-                c.ConfigureConsumer<RateConsumer>(ctx);
-            });
-        }, (cfg) =>
-        {
-            cfg.RegisterProducer<TransactionCreatedEvent>(RabbitEndpoint.TransactionCreate);
-            cfg.RegisterProducer<TransferTransactionCreatedEvent>(RabbitEndpoint.TransferTransactionCreate);
-        });
-    }*/
+        },
+        null);
+    }
 }
