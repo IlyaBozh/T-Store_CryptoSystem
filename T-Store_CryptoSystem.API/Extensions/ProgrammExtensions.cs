@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using T_Store_CryptoSystem.API.Models.Request;
 using IncredibleBackend.Messaging.Extentions;
 using MassTransit;
+using T_Store_CryptoSystem.BusinessLayer.MassTransit;
 
 namespace T_Store_CryptoSystem.API.Extensions;
 
@@ -48,7 +49,14 @@ public static class ProgrammExtensions
     {
         services.RegisterConsumersAndProducers((config) =>
         {
-            config.AddConsumer<RateConsumer>();
+            config.AddConsumer<Consumer>();
+        },
+        (cfg, ctx) =>
+        {
+            cfg.ReceiveEndpoint("cryptoRates", c =>
+            {
+                c.ConfigureConsumer<Consumer>(ctx);
+            });
         },
         null);
     }
