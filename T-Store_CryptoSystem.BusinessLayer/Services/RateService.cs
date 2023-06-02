@@ -21,21 +21,19 @@ public class RateService : IRateService
         {
             _logger.LogInformation("Business layer: Call method GetRate");
 
-            var rates = new Dictionary<string, decimal>();
-            rates.Add("USDBITCOIN", (decimal)0.000000012);
-            rates.Add("BITCOINUSD", (decimal)83333333.333);
+            var rates = GetRate();
 
             if (currencyFirst != currencySecond)
             {
-                if ("USD" == currencyFirst || "USD" == currencySecond)
+                if (RateModel.BaseCurrency == currencyFirst)
                 {
                     _logger.LogInformation("Business layer: Calculate currency rate");
-                    result = rates.ContainsKey(currencyFirst + currencySecond) is true ? rates[currencyFirst + currencySecond] : rates[currencySecond + currencyFirst];
+                    result = 1 / rates[currencySecond + currencyFirst];
                 }
                 else
                 {
                     _logger.LogInformation("Business layer: Calculate currency rate");
-                    result = rates[currencySecond] / rates[currencyFirst];
+                    result = rates[currencyFirst + currencySecond];
                 }
             }
             return result;
@@ -62,12 +60,10 @@ public class RateService : IRateService
                 throw new ServiceUnavailableException("Rates is epmty");
             }
             _logger.LogInformation("Business layer: Convert to the dictionary currency rates wihtout base currency");
-            RateModel.CurrencyRates = rates.ToDictionary(t => t.Key.Substring(3), t => t.Value);
+            RateModel.CurrencyRates = rates;
 
             _logger.LogInformation("Business layer: Find base currency");
-            RateModel.BaseCurrency = rates.GroupBy(k => k.Key.Remove(3))
-                .FirstOrDefault()!
-                .Key;
+            RateModel.BaseCurrency = "USD";
         }
     }
 }

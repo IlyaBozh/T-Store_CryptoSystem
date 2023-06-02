@@ -1,4 +1,4 @@
-﻿using T_Store_CryptoSystem.BusinessLayer.Services.Interfaces;
+using T_Store_CryptoSystem.BusinessLayer.Services.Interfaces;
 using T_Store_CryptoSystem.BusinessLayer.Services;
 using T_Store_CryptoSystem.DataLayer.Repository.interfaces;
 using T_Store_CryptoSystem.DataLayer.Repository;
@@ -6,10 +6,13 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using T_Store_CryptoSystem.API.Validations;
 using Microsoft.OpenApi.Models;
-using T_Store_CryptoSystem.API.Models.Request;
 using IncredibleBackend.Messaging.Extentions;
 using MassTransit;
 using T_Store_CryptoSystem.BusinessLayer.MassTransit;
+using CryptoSystem_NuGetPackage.Events;
+using IncredibleBackend.Messaging.Interfaces;
+using IncredibleBackend.Messaging;
+using CryptoSystem_NuGetPackage.Requests;
 
 namespace T_Store_CryptoSystem.API.Extensions;
 
@@ -20,6 +23,8 @@ public static class ProgrammExtensions
         services.AddScoped<ITransactionService, TransactionService>();
         services.AddScoped<ICalculationService, CalculationService>();
         services.AddScoped<IRateService, RateService>();
+        services.AddScoped<IMessageProducer, MessageProducer>();
+        services.AddScoped<IRatesHistoryService, RatesHistoryService>();
     }
 
     public static void AddRepositories(this IServiceCollection services)
@@ -49,15 +54,22 @@ public static class ProgrammExtensions
     {
         services.RegisterConsumersAndProducers((config) =>
         {
-            config.AddConsumer<Consumer>();
+            config.AddConsumer<RatesConsumer>();
+            config.AddConsumer<RateHistoryConsumer>();
         },
         (cfg, ctx) =>
         {
             cfg.ReceiveEndpoint("cryptoRates", c =>
             {
-                c.ConfigureConsumer<Consumer>(ctx);
+                c.ConfigureConsumer<RatesConsumer>(ctx);
+            });
+            cfg.ReceiveEndpoint("cryptoRatesHistory", c =>
+            {
+                c.ConfigureConsumer<RateHistoryConsumer>(ctx);
             });
         },
-        null);
+       (cfg) => {
+           cfg.RegisterProducer<RatesInfoEvent>("rateInfo");
+       });
     }
 }

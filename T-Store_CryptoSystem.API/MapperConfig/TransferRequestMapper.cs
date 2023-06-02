@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using T_Store_CryptoSystem.API.Models.Request;
 using T_Store_CryptoSystem.BusinessLayer.Models;
-using T_Store_CryptoSystem.DataLayer.Enums;
+using CryptoSystem_NuGetPackage.Enums;
+using CryptoSystem_NuGetPackage.Requests;
 
 namespace T_Store_CryptoSystem.API.MapperConfig;
 

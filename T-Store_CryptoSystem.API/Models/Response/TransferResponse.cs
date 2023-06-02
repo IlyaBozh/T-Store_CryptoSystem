@@ -1,4 +1,4 @@
-﻿using T_Store_CryptoSystem.DataLayer.Enums;
+﻿using CryptoSystem_NuGetPackage.Enums;
 
 namespace T_Store_CryptoSystem.API.Models.Response;
 

@@ -1,6 +1,6 @@
-﻿using FluentValidation;
+﻿using CryptoSystem_NuGetPackage.Requests;
+using FluentValidation;
 using T_Store_CryptoSystem.API.Infrastructure;
-using T_Store_CryptoSystem.API.Models.Request;
 
 namespace T_Store_CryptoSystem.API.Validations;
 

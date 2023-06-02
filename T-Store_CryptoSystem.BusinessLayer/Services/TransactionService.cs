@@ -1,11 +1,10 @@
 ﻿
 using AutoMapper;
 using Microsoft.Extensions.Logging;
-using System.Transactions;
 using T_Store_CryptoSystem.BusinessLayer.Exceptions;
 using T_Store_CryptoSystem.BusinessLayer.Models;
 using T_Store_CryptoSystem.BusinessLayer.Services.Interfaces;
-using T_Store_CryptoSystem.DataLayer.Enums;
+using CryptoSystem_NuGetPackage.Enums;
 using T_Store_CryptoSystem.DataLayer.Models;
 using T_Store_CryptoSystem.DataLayer.Repository.interfaces;
 
