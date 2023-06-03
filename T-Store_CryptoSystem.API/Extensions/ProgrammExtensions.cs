@@ -24,7 +24,6 @@ public static class ProgrammExtensions
         services.AddScoped<ICalculationService, CalculationService>();
         services.AddScoped<IRateService, RateService>();
         services.AddScoped<IMessageProducer, MessageProducer>();
-        services.AddScoped<IRatesHistoryService, RatesHistoryService>();
     }
 
     public static void AddRepositories(this IServiceCollection services)
@@ -55,7 +54,6 @@ public static class ProgrammExtensions
         services.RegisterConsumersAndProducers((config) =>
         {
             config.AddConsumer<RatesConsumer>();
-            config.AddConsumer<RateHistoryConsumer>();
         },
         (cfg, ctx) =>
         {
@@ -63,13 +61,7 @@ public static class ProgrammExtensions
             {
                 c.ConfigureConsumer<RatesConsumer>(ctx);
             });
-            cfg.ReceiveEndpoint("cryptoRatesHistory", c =>
-            {
-                c.ConfigureConsumer<RateHistoryConsumer>(ctx);
-            });
         },
-       (cfg) => {
-           cfg.RegisterProducer<RatesInfoEvent>("rateInfo");
-       });
+       null);
     }
 }
