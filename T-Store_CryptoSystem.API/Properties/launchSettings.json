@@ -17,7 +17,7 @@
       "applicationUrl": "https://localhost:7051;http://localhost:5099",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "TSTORE_DB_CONNECTION_STRING": "Server=.;Database=T-Store_CryptoSystem.DB;Trusted_Connection=True;",
+        "TSTORE_DB_CONNECTION_STRING": "Data Source=SQL6030.site4now.net;Initial Catalog=db_a9aad5_tscryptosystemdb;User Id=db_a9aad5_tscryptosystemdb_admin;Password=135792468q;",
         "LOG_DIRECTORY": "C:\\Users\\iliai\\source\\repos\\logs\\T-Store"
       }
     },

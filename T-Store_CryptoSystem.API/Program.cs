@@ -1,5 +1,4 @@
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System.Data.SqlClient;
 using System.Data;
@@ -23,18 +22,8 @@ builder.Services.AddScoped<IDbConnection>(sp => new SqlConnection(dbConfig.TSTOR
 
 // Add services to the container.
 
-builder.Services.AddControllers()
-    .AddNewtonsoftJson()
-    .ConfigureApiBehaviorOptions(options =>
-    {
-        options.InvalidModelStateResponseFactory = context =>
-        {
-            var result = new BadRequestObjectResult(context.ModelState);
-            result.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            return result;
-        };
-
-    });
+builder.Services.AddControllers();
+ 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -59,5 +48,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthorization();
 app.MapControllers();
-app.UseAdminSafeList();
+//app.UseAdminSafeList();
 app.Run();

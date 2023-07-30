@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using T_Store_CryptoSystem.API.Models.Request;
+using CryptoSystem_NuGetPackage.Requests;
 using T_Store_CryptoSystem.API.Models.Response;
 using T_Store_CryptoSystem.BusinessLayer.Models;
 
