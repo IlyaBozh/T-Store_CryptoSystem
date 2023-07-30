@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Enums\**" />
+    <Content Remove="Enums\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <None Remove="Enums\**" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Controllers\3dgnomc4.ovm~" />
+	</ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="CryptoSystem-NuGetPackge" Version="1.5.0" />
@@ -23,10 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\T-Store_CryptoSystem.BusinessLayer\T-Store_CryptoSystem.BusinessLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Enums\" />
   </ItemGroup>
 
 </Project>

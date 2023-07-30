@@ -28,12 +28,12 @@ public class RateService : IRateService
                 if (RateModel.BaseCurrency == currencyFirst)
                 {
                     _logger.LogInformation("Business layer: Calculate currency rate");
-                    result = 1 / rates[currencySecond + currencyFirst];
+                    result = 1 / rates[currencySecond + "/" + currencyFirst];
                 }
                 else
                 {
                     _logger.LogInformation("Business layer: Calculate currency rate");
-                    result = rates[currencyFirst + currencySecond];
+                    result = rates[currencyFirst + "/" + currencySecond];
                 }
             }
             return result;
